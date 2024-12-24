@@ -31,10 +31,10 @@ export default function EditQuote() {
 
   // Form state
   const [formData, setFormData] = useState({
-    quote_status: '',
-    date_quoted: '',
-    quote_reference: '',
-    fee_ex_vat: '',
+    quoteStatus: '',
+    dateQuoted: '',
+    quoteReference: '',
+    feeExVat: '',
   });
 
   useEffect(() => {
@@ -43,10 +43,10 @@ export default function EditQuote() {
         const data = await quotesApi.getOne(id);
         setQuote(data);
         setFormData({
-          quote_status: data.quote_status || '',
-          date_quoted: data.date_quoted ? data.date_quoted.split('T')[0] : '',
-          quote_reference: data.quote_reference || '',
-          fee_ex_vat: data.fee_ex_vat ? data.fee_ex_vat.toString() : '',
+          quoteStatus: data.quote_status || '',
+          dateQuoted: data.date_quoted ? data.date_quoted.split('T')[0] : '',
+          quoteReference: data.quote_reference || '',
+          feeExVat: data.fee_ex_vat ? data.fee_ex_vat.toString() : '',
         });
         setError('');
       } catch (err) {
@@ -80,8 +80,10 @@ export default function EditQuote() {
 
     try {
       const updatedData = {
-        ...formData,
-        fee_ex_vat: formData.fee_ex_vat ? parseFloat(formData.fee_ex_vat) : null,
+        quoteStatus: formData.quoteStatus,
+        dateQuoted: formData.dateQuoted || null,
+        quoteReference: formData.quoteReference || null,
+        feeExVat: formData.feeExVat ? parseFloat(formData.feeExVat) : null,
       };
 
       await quotesApi.update(id, updatedData);
@@ -149,8 +151,8 @@ export default function EditQuote() {
             <FormControl fullWidth>
               <InputLabel>Status</InputLabel>
               <Select
-                name="quote_status"
-                value={formData.quote_status}
+                name="quoteStatus"
+                value={formData.quoteStatus}
                 onChange={handleInputChange}
                 label="Status"
                 required
@@ -169,8 +171,8 @@ export default function EditQuote() {
               fullWidth
               label="Date Quoted"
               type="date"
-              name="date_quoted"
-              value={formData.date_quoted}
+              name="dateQuoted"
+              value={formData.dateQuoted}
               onChange={handleInputChange}
               InputLabelProps={{ shrink: true }}
             />
@@ -180,8 +182,8 @@ export default function EditQuote() {
             <TextField
               fullWidth
               label="Quote Reference"
-              name="quote_reference"
-              value={formData.quote_reference}
+              name="quoteReference"
+              value={formData.quoteReference}
               onChange={handleInputChange}
             />
           </Grid>
@@ -190,9 +192,9 @@ export default function EditQuote() {
             <TextField
               fullWidth
               label="Fee (ex VAT)"
-              name="fee_ex_vat"
+              name="feeExVat"
               type="number"
-              value={formData.fee_ex_vat}
+              value={formData.feeExVat}
               onChange={handleInputChange}
               InputProps={{
                 startAdornment: '£',
