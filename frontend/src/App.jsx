@@ -20,6 +20,8 @@ import Consultants from './pages/Consultants';
 import TopicAreas from './pages/TopicAreas';
 import Tasks from './pages/Tasks';
 import Quotes from './pages/Quotes';
+import ViewQuote from './pages/quotes/ViewQuote';
+import EditQuote from './pages/quotes/EditQuote';
 
 const theme = createTheme({
   palette: {
@@ -192,6 +194,22 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <div>Create Quote (Coming Soon)</div>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/quotes/:id"
+        element={
+          <ProtectedRoute>
+            <ViewQuote />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/quotes/:id/edit"
+        element={
+          <ProtectedRoute>
+            <EditQuote />
           </ProtectedRoute>
         }
       />
